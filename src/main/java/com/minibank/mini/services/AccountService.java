@@ -63,7 +63,7 @@ public class AccountService implements AccountServiceInterface {
 
     @Override
     @Transactional
-    public Response deposit(String toAccount, Double amount) {
+    public synchronized Response deposit(String toAccount, Double amount) {
         Response response = null;
         try {
 
@@ -116,7 +116,7 @@ public class AccountService implements AccountServiceInterface {
     }
 
     @Override
-    public Response withdrawal(String fromAccount, Double amount) {
+    public synchronized Response withdrawal(String fromAccount, Double amount) {
 
         Response response = null;
 

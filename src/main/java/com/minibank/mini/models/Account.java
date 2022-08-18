@@ -1,5 +1,6 @@
 package com.minibank.mini.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -33,5 +34,14 @@ public class Account {
 
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Transaction> transactions;
+
+    @JsonManagedReference
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
 
 }

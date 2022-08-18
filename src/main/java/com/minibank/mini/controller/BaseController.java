@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
+@RequestMapping("/account")
 public class BaseController {
 
     @Autowired
     AccountServiceInterface accountService;
 
-    @PostMapping(value = "/account/create", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    @PostMapping(value = "/create", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public Response CreateAccount(@RequestBody AccountDto accountDto){
 
         Response response = Utils.validateAccountDetails(accountDto);
@@ -30,7 +32,8 @@ public class BaseController {
         return accountService.createAccount(accountDto);
     }
 
-    @PostMapping(value = "/account/deposit", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    @PostMapping(value = "/deposit", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public Response depositAccount(@RequestBody TransactionRequest request){
 
         Response response = Utils.validateTransactionRequest(request);
@@ -39,10 +42,11 @@ public class BaseController {
             return response;
         }
 
-        return accountService.deposit(request.getAccountNumber(), Double.valueOf(request.getAccountNumber()));
+        return accountService.deposit(request.getAccountNumber(), Double.valueOf(request.getAmount()));
     }
 
-    @PostMapping(value = "/account/withdraw", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    @CrossOrigin
+    @PostMapping(value = "/withdraw", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public Response withdrawFromAccount(@RequestBody TransactionRequest request){
 
         Response response = Utils.validateTransactionRequest(request);
@@ -51,11 +55,12 @@ public class BaseController {
             return response;
         }
 
-        return accountService.withdrawal(request.getAccountNumber(), Double.valueOf(request.getAccountNumber()));
+        return accountService.withdrawal(request.getAccountNumber(), Double.valueOf(request.getAmount()));
     }
 
-    @PostMapping(value = "/account/transactions", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public Response getTransaction(@RequestParam FetchTransaction req){
+    @CrossOrigin
+    @PostMapping(value = "/transactions", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public Response getTransaction(@RequestBody FetchTransaction req){
 
         Response response = Utils.validateFetchTransactionRequest(req);
 

@@ -1,5 +1,6 @@
 package com.minibank.mini.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.minibank.mini.enums.TransactionType;
 import lombok.Data;
 
@@ -37,5 +38,9 @@ public class Transaction {
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
+
+    @JsonBackReference
+    public Account getAccount() { return account;}
+
 
 }
